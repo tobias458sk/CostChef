@@ -1,0 +1,83 @@
+body {
+  font-family: system-ui, Arial;
+  background: #f2f4f7;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: white;
+  margin-bottom: 16px;
+}
+
+.login-box {
+  background: #2f6fed;
+  padding: 30px;
+  border-radius: 16px;
+  max-width: 400px;
+  margin: 80px auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.login-box input {
+  width: 80%;
+  margin-bottom: 12px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+section.box {
+  background: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+input, select {
+  padding: 10px;
+  margin: 6px 0;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+button {
+  margin-top: 8px;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background: #2f6fed;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1f4bcc;
+}
+
+button.danger {
+  background: #e74c3c;
+}
+
+button.danger:hover {
+  background: #c0392b;
+}
+
+li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+li .ingredient-item {
+  font-size: 0.9em;
+  color: #555;
+  margin-left: 12px;
+}
+
