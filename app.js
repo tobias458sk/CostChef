@@ -187,24 +187,7 @@ function renderSelects() {
   });
 }
 
-// =====================
-// MAZANIE INGREDIENCIE
-// =====================
-function removeIngredient(i) {
-  ingredients.splice(i, 1);
 
-  // oprav indexy v jedlách
-  meals.forEach(meal => {
-    meal.ingredients = meal.ingredients.filter(item => item.ingIndex !== i);
-    meal.ingredients.forEach(item => {
-      if (item.ingIndex > i) {
-        item.ingIndex--;
-      }
-    });
-  });
-
-  saveData();
-  renderAll();
 }
 
 // =====================
