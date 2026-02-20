@@ -8,73 +8,110 @@
 </head>
 <body>
 
-<div class="container">
-
+<!-- ===================== -->
+<!-- ÚVODNÁ OBRAZOVKA -->
+<!-- ===================== -->
+<div id="welcomeScreen" class="center-screen">
   <h1>CostChef</h1>
+  <p>Vitaj na stránke</p>
 
-  <!-- Tlačidlo vymazať všetko -->
-  <button onclick="clearAll()" class="danger">Vymazať všetko</button>
-
-  <!-- ===================== -->
-  <!-- INGREDIENCIE -->
-  <!-- ===================== -->
-  <section class="card">
-    <h2>Ingrediencie</h2>
-
-    <div class="row">
-      <input id="ingName" placeholder="Názov ingrediencie">
-      <input id="ingPrice" type="number" step="0.01" placeholder="Cena €/kg">
-      <input id="ingGrams" type="number" step="1" placeholder="g (predvolené)">
-      <button onclick="addIngredient()">Pridať</button>
-    </div>
-
-    <ul id="ingredientsList"></ul>
-  </section>
-
-  <!-- ===================== -->
-  <!-- JEDLÁ -->
-  <!-- ===================== -->
-  <section class="card">
-    <h2>Jedlá</h2>
-
-    <div class="row">
-      <input id="mealName" placeholder="Názov jedla">
-      <input id="mealPrice" type="number" step="0.01" placeholder="Predajná cena €">
-      <button onclick="addMeal()">Pridať</button>
-    </div>
-
-    <ul id="mealsList"></ul>
-  </section>
-
-  <!-- ===================== -->
-  <!-- PRIDAŤ INGREDIENCIE DO JEDLA -->
-  <!-- ===================== -->
-  <section class="card">
-    <h2>Pridať ingrediencie do jedla</h2>
-
-    <div class="row">
-      <select id="mealSelect"></select>
-    </div>
-
-    <div id="ingredientCheckboxList" class="checkbox-list">
-      <!-- Checkboxy sa generujú dynamicky cez JS -->
-      <!-- Príklad formátu:
-      <label class="checkbox-item">
-        <input type="checkbox" value="0">
-        <span>Ingrediencia (100g | 3.50 €/kg)</span>
-      </label>
-      -->
-    </div>
-
-    <button onclick="addSelectedIngredients()">Pridať označené suroviny</button>
-  </section>
-
+  <div class="menu-buttons">
+    <button onclick="showApp()">Vypočty</button>
+    <button onclick="showRecipes()">Recepty</button>
+  </div>
 </div>
 
 <!-- ===================== -->
-<!-- JAVASCRIPT -->
+<!-- HLAVNÁ APLIKÁCIA -->
 <!-- ===================== -->
+<div id="appContent" style="display:none;">
+  <div class="container">
+
+    <h1>CostChef</h1>
+    <button onclick="goHome()" class="danger">Späť</button>
+    <button onclick="clearAll()" class="danger">Vymazať všetko</button>
+
+    <!-- INGREDIENCIE -->
+    <section class="card">
+      <h2>Ingrediencie</h2>
+
+      <div class="row">
+        <input id="ingName" placeholder="Názov ingrediencie">
+        <input id="ingPrice" type="number" step="0.01" placeholder="Cena €/kg">
+        <input id="ingGrams" type="number" step="1" placeholder="g (predvolené)">
+        <button onclick="addIngredient()">Pridať</button>
+      </div>
+
+      <ul id="ingredientsList"></ul>
+    </section>
+
+    <!-- JEDLÁ -->
+    <section class="card">
+      <h2>Jedlá</h2>
+
+      <div class="row">
+        <input id="mealName" placeholder="Názov jedla">
+        <input id="mealPrice" type="number" step="0.01" placeholder="Predajná cena €">
+        <button onclick="addMeal()">Pridať</button>
+      </div>
+
+      <ul id="mealsList"></ul>
+    </section>
+
+    <!-- PRIDAŤ INGREDIENCIE -->
+    <section class="card">
+      <h2>Pridať ingrediencie do jedla</h2>
+
+      <div class="row">
+        <select id="mealSelect"></select>
+      </div>
+
+      <div id="ingredientCheckboxList" class="checkbox-list"></div>
+
+      <button onclick="addSelectedIngredients()">Pridať označené suroviny</button>
+    </section>
+
+  </div>
+</div>
+
+<!-- ===================== -->
+<!-- RECEPTY STRÁNKA -->
+<!-- ===================== -->
+<div id="recipesPage" style="display:none;">
+
+  <h1 class="recipes-title">Recepty</h1>
+
+  <div class="recipes-content">
+
+    <div class="recipe-card">
+     <img src="palacinky.jpg" alt="Palacinky">
+
+      <h2>Rýchle palacinky</h2>
+
+      <h3>Ingrediencie:</h3>
+      <ul>
+        <li>250 g hladkej múky</li>
+        <li>2 vajcia</li>
+        <li>500 ml mlieka</li>
+        <li>Štipka soli</li>
+        <li>1 PL cukru</li>
+      </ul>
+
+      <h3>Postup:</h3>
+      <p>
+        Všetky ingrediencie zmiešaj do hladkého cesta.
+        Na panvici rozohrej trochu oleja.
+        Nalej naberačku cesta a peč z oboch strán dozlatista.
+      </p>
+
+    </div>
+
+  </div>
+
+  <button class="back-fixed" onclick="goHome()">Späť</button>
+
+</div>
+
 <script src="app.js"></script>
 </body>
 </html>
-
