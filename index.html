@@ -8,6 +8,7 @@
 </head>
 <body>
 
+<!-- LOGIN -->
 <div id="login">
   <h1 class="title">CostChef 🔒</h1>
   <div class="login-box">
@@ -16,28 +17,42 @@
   </div>
 </div>
 
+<!-- APP -->
 <div id="app" style="display:none;">
   <div class="container">
+
     <h1 class="title">CostChef 🍽️</h1>
     <button class="danger" onclick="resetAll()">Vymazať všetko</button>
 
-    <section class="box highlight">
-      <h2>Pridať jedlo s ingredienciami naraz</h2>
+    <!-- INGREDIENCIE -->
+    <section class="box">
+      <h2>Ingrediencie</h2>
+      <input id="ingName" placeholder="Názov ingrediencie">
+      <input id="ingPrice" type="number" step="0.01" placeholder="Cena za kilo €">
+      <input id="ingGrams" type="number" step="1" placeholder="Gramy na porciu">
+      <button onclick="addIngredient()">Pridať ingredienciu</button>
+      <ul id="ingredientsList"></ul>
+    </section>
 
+    <!-- JEDLÁ -->
+    <section class="box">
+      <h2>Jedlá</h2>
       <input id="mealName" placeholder="Názov jedla">
-
-      <div id="ingredientInputs">
-        <div class="ingredientRow">
-          <input class="ingName" placeholder="Názov ingrediencie">
-          <input class="ingPrice" type="number" step="0.01" placeholder="Cena za kilo €">
-          <input class="ingGrams" type="number" step="1" placeholder="Gramy na porciu">
-        </div>
-      </div>
-
-      <button onclick="addIngredientRow()">➕ Pridať ďalšiu ingredienciu</button>
-      <button class="bigBtn" onclick="addMealWithIngredients()">Pridať jedlo</button>
-
+      <input id="mealPrice" type="number" step="0.01" placeholder="Predajná cena €">
+      <button onclick="addMeal()">Pridať jedlo</button>
       <ul id="mealsList"></ul>
+    </section>
+
+    <!-- PRIDAŤ INGREDIENCIE DO JEDLA -->
+    <section class="box highlight">
+      <h2>Pridať ingrediencie do jedla</h2>
+
+      <select id="mealSelect"></select>
+      <select id="ingSelect" multiple size="5"></select>
+
+      <button class="bigBtn" onclick="addIngredientToMeal()">
+        ➕ Pridať do jedla
+      </button>
     </section>
 
   </div>
