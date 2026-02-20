@@ -1,3 +1,6 @@
+// =====================
+// DATA
+// =====================
 let ingredients = JSON.parse(localStorage.getItem("ingredients")) || [];
 let meals = JSON.parse(localStorage.getItem("meals")) || [];
 
@@ -65,34 +68,41 @@ function addMeal() {
 }
 
 // =====================
-// PRIDAŤ INGREDIENCIE DO JEDLA
+// PRIDAŤ OZNAČENÉ SUROVINY
 // =====================
-function addIngredientToMeal() {
+function addSelectedIngredients() {
   const mealIndex = mealSelect.value;
-  const selected = Array.from(ingSelect.selectedOptions);
 
-  if (mealIndex === "" || selected.length === 0) {
-    alert("Vyber jedlo aj ingrediencie");
+  if (mealIndex === "") {
+    alert("Vyber jedlo");
     return;
   }
 
-  selected.forEach(opt => {
-    const ingIndex = parseInt(opt.value);
+  const checked = document.querySelectorAll("#ingredientCheckboxList input:checked");
+
+  if (checked.length === 0) {
+    alert("Označ aspoň jednu surovinu");
+    return;
+  }
+
+  checked.forEach(cb => {
+    const ingIndex = parseInt(cb.value);
     const grams = ingredients[ingIndex].grams;
 
     meals[mealIndex].ingredients.push({
       ingIndex,
       grams
     });
+
+    cb.checked = false;
   });
 
   saveData();
   renderAll();
-  ingSelect.selectedIndex = -1;
 }
 
 // =====================
-// RENDER
+// RENDER VŠETKO
 // =====================
 function renderAll() {
   renderIngredients();
@@ -101,7 +111,7 @@ function renderAll() {
 }
 
 // =====================
-// INGREDIENCIE
+// INGREDIENCIE LIST
 // =====================
 function renderIngredients() {
   ingredientsList.innerHTML = "";
@@ -110,14 +120,14 @@ function renderIngredients() {
     ingredientsList.innerHTML += `
       <li>
         ${ing.name} — ${ing.price.toFixed(2)} €/kg | ${ing.grams} g
-        <button onclick="removeIngredient(${i})">❌</button>
+        <button class="danger-small" onclick="removeIngredient(${i})">❌</button>
       </li>
     `;
   });
 }
 
 // =====================
-// JEDLÁ
+// JEDLÁ LIST + VÝPOČTY
 // =====================
 function renderMeals() {
   mealsList.innerHTML = "";
@@ -141,37 +151,44 @@ function renderMeals() {
     const profit = meal.price - total;
     const margin = meal.price > 0 ? (profit / meal.price) * 100 : 0;
 
+    const lossClass = profit < 0 ? "loss" : "";
+
     mealsList.innerHTML += `
-      <li>
+      <li class="${lossClass}">
         <strong>${meal.name}</strong><br>
         Predaj: ${meal.price.toFixed(2)} €<br>
         Náklady: ${total.toFixed(2)} €<br>
         Ingrediencie: ${text || "žiadne"}<br>
         <b>Zisk: ${profit.toFixed(2)} € | Marža: ${margin.toFixed(1)} %</b>
-        <button onclick="removeMeal(${i})">❌</button>
+        <button class="danger-small" onclick="removeMeal(${i})">❌</button>
       </li>
     `;
   });
 }
 
 // =====================
-// SELECTY
+// SELECT + CHECKBOXY
 // =====================
 function renderSelects() {
   mealSelect.innerHTML = '<option value="">Vyber jedlo</option>';
-  ingSelect.innerHTML = "";
+  ingredientCheckboxList.innerHTML = "";
 
   meals.forEach((m, i) => {
     mealSelect.innerHTML += `<option value="${i}">${m.name}</option>`;
   });
 
   ingredients.forEach((ing, i) => {
-    ingSelect.innerHTML += `<option value="${i}">${ing.name}</option>`;
+    ingredientCheckboxList.innerHTML += `
+      <label class="checkbox-item">
+        <input type="checkbox" value="${i}">
+        ${ing.name} (${ing.grams}g | ${ing.price.toFixed(2)} €/kg)
+      </label>
+    `;
   });
 }
 
 // =====================
-// MAZANIE
+// MAZANIE INGREDIENCIE
 // =====================
 function removeIngredient(i) {
   ingredients.splice(i, 1);
@@ -190,6 +207,9 @@ function removeIngredient(i) {
   renderAll();
 }
 
+// =====================
+// MAZANIE JEDLA
+// =====================
 function removeMeal(i) {
   meals.splice(i, 1);
   saveData();
