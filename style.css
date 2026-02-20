@@ -1,83 +1,152 @@
 body {
-  font-family: system-ui, Arial;
-  background: #f2f4f7;
   margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(135deg, #111, #1f1f1f);
+  color: #f1f1f1;
+}
+
+.title {
+  text-align: center;
+  font-size: 36px;
+  margin: 30px 0;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
   padding: 20px;
 }
 
-h1 {
-  text-align: center;
-  color: white;
-  margin-bottom: 16px;
+.dashboard {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 30px;
 }
 
-.login-box {
-  background: #2f6fed;
-  padding: 30px;
-  border-radius: 16px;
-  max-width: 400px;
-  margin: 80px auto;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  text-align: center;
-}
-
-.login-box input {
-  width: 80%;
-  margin-bottom: 12px;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-}
-
-section.box {
-  background: white;
+.dashboard div {
+  flex: 1;
+  background: rgba(255,255,255,0.05);
   padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  text-align: center;
+  transition: 0.3s;
+}
+
+.dashboard div:hover {
+  transform: translateY(-5px);
+  background: rgba(255,255,255,0.08);
+}
+
+.dashboard p {
+  font-size: 26px;
+  font-weight: bold;
+  margin: 10px 0 0 0;
+}
+
+.box {
+  background: rgba(255,255,255,0.05);
+  padding: 25px;
+  margin-bottom: 25px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+
+.box:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.highlight {
+  border: 2px solid #00ffae;
+  box-shadow: 0 0 15px rgba(0,255,174,0.3);
 }
 
 input, select {
-  padding: 10px;
-  margin: 6px 0;
   width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #ddd;
+  padding: 12px;
+  margin: 8px 0;
   border-radius: 8px;
+  border: none;
+  background: #2a2a2a;
+  color: white;
+  font-size: 14px;
+}
+
+select[multiple] {
+  height: auto;
+}
+
+input:focus, select:focus {
+  outline: 2px solid #00ffae;
 }
 
 button {
-  margin-top: 8px;
-  padding: 10px;
   width: 100%;
+  padding: 12px;
   border: none;
   border-radius: 8px;
-  background: #2f6fed;
-  color: white;
-  font-weight: 600;
+  background: linear-gradient(135deg, #00b894, #00ffae);
+  color: black;
+  font-weight: bold;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 button:hover {
-  background: #1f4bcc;
+  transform: scale(1.03);
 }
 
-button.danger {
-  background: #e74c3c;
+.bigBtn {
+  font-size: 18px;
+  padding: 16px;
 }
 
-button.danger:hover {
-  background: #c0392b;
+.danger {
+  background: linear-gradient(135deg, #d63031, #ff4d4d);
+  color: white;
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
 }
 
 li {
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
+  background: rgba(255,255,255,0.05);
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+  transition: 0.3s;
 }
 
-li .ingredient-item {
-  font-size: 0.9em;
-  color: #555;
-  margin-left: 12px;
+li:hover {
+  background: rgba(255,255,255,0.1);
 }
 
+.progressBar {
+  height: 8px;
+  background: #333;
+  border-radius: 10px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+.login-box {
+  max-width: 400px;
+  margin: 150px auto;
+  padding: 30px;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+}
