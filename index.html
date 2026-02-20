@@ -2,6 +2,7 @@
 <html lang="sk">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CostChef</title>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -9,51 +10,55 @@
 
 <!-- LOGIN -->
 <div id="login">
+  <h1 class="title">CostChef 🔒</h1>
   <div class="login-box">
-    <h1>Zadaj prístupový kód</h1>
-    <input id="code" placeholder="Tvoj kód">
+    <input id="code" placeholder="Zadaj prístupový kód">
     <button onclick="checkCode()">Vstúpiť</button>
   </div>
 </div>
 
-<!-- HLAVNÁ APLIKÁCIA -->
+<!-- APP -->
 <div id="app" style="display:none;">
-  <h1>CostChef</h1>
+  <div class="container">
 
-  <!-- Ingrediencie -->
-  <section class="box">
-    <h2>Ingrediencie</h2>
-    <input id="ingName" placeholder="Názov">
-    <input id="ingPrice" type="number" placeholder="Cena balenie €">
-    <input id="ingQty" type="number" placeholder="Množstvo balenie">
-    <button onclick="addIngredient()">Pridať ingredienciu</button>
-    <ul id="ingredientsList"></ul>
-  </section>
+    <h1 class="title">CostChef 🍽️</h1>
+    <button class="danger" onclick="resetAll()">Vymazať všetko</button>
 
-  <!-- Jedlá -->
-  <section class="box">
-    <h2>Jedlá</h2>
-    <input id="mealName" placeholder="Názov jedla">
-    <input id="mealPrice" type="number" placeholder="Predajná cena €">
-    <button onclick="addMeal()">Pridať jedlo</button>
-    <ul id="mealsList"></ul>
+    <!-- INGREDIENCIE -->
+    <section class="box">
+      <h2>Ingrediencie</h2>
+      <input id="ingName" placeholder="Názov ingrediencie">
+      <input id="ingPrice" type="number" step="0.01" placeholder="Cena za kilo €">
+      <button onclick="addIngredient()">Pridať ingredienciu</button>
+      <ul id="ingredientsList"></ul>
+    </section>
 
-    <h3>Pridať ingredienciu do jedla</h3>
-    <select id="mealSelect">
-      <option value="">Vyber jedlo</option>
-    </select>
-    <select id="ingSelect">
-      <option value="">Vyber ingredienciu</option>
-    </select>
-    <input id="ingAmount" type="number" placeholder="Množstvo">
-    <button onclick="addIngredientToMeal()">Pridať do jedla</button>
-  </section>
+    <!-- JEDLÁ -->
+    <section class="box">
+      <h2>Jedlá</h2>
+      <input id="mealName" placeholder="Názov jedla">
+      <input id="mealPrice" type="number" step="0.01" placeholder="Predajná cena €">
+      <button onclick="addMeal()">Pridať jedlo</button>
+      <ul id="mealsList"></ul>
+    </section>
 
-  <button id="clearAll" class="danger" onclick="clearAll()">Vymazať všetko</button>
+    <!-- PRIDAŤ INGREDIENCIE DO JEDLA -->
+    <section class="box highlight">
+      <h2>Pridať ingredienciu do jedla</h2>
+
+      <select id="mealSelect"></select>
+      <select id="ingSelect" multiple size="5"></select>
+
+      <input id="ingAmount" type="number" placeholder="Počet gramov na porciu">
+
+      <button class="bigBtn" onclick="addIngredientToMeal()">
+        ➕ Pridať do jedla
+      </button>
+    </section>
+
+  </div>
 </div>
 
 <script src="app.js"></script>
 </body>
 </html>
-
-
