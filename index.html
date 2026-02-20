@@ -56,7 +56,15 @@
       <select id="mealSelect"></select>
     </div>
 
-    <div id="ingredientCheckboxList" class="checkbox-list"></div>
+    <div id="ingredientCheckboxList" class="checkbox-list">
+      <!-- Checkboxy sa generujú dynamicky cez JS -->
+      <!-- Príklad formátu:
+      <label class="checkbox-item">
+        <input type="checkbox" value="0">
+        <span>Ingrediencia (100g | 3.50 €/kg)</span>
+      </label>
+      -->
+    </div>
 
     <button onclick="addSelectedIngredients()">Pridať označené suroviny</button>
   </section>
