@@ -29,6 +29,7 @@
       <h2>Ingrediencie</h2>
       <input id="ingName" placeholder="Názov ingrediencie">
       <input id="ingPrice" type="number" step="0.01" placeholder="Cena za kilo €">
+      <input id="ingGrams" type="number" step="1" placeholder="Gramy na porciu">
       <button onclick="addIngredient()">Pridať ingredienciu</button>
       <ul id="ingredientsList"></ul>
     </section>
@@ -44,12 +45,10 @@
 
     <!-- PRIDAŤ INGREDIENCIE DO JEDLA -->
     <section class="box highlight">
-      <h2>Pridať ingredienciu do jedla</h2>
+      <h2>Pridať ingrediencie do jedla</h2>
 
       <select id="mealSelect"></select>
       <select id="ingSelect" multiple size="5"></select>
-
-      <input id="ingAmount" type="number" placeholder="Počet gramov na porciu">
 
       <button class="bigBtn" onclick="addIngredientToMeal()">
         ➕ Pridať do jedla
