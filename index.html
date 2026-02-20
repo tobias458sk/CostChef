@@ -8,54 +8,49 @@
 </head>
 <body>
 
-<!-- LOGIN -->
-<div id="login">
-  <h1 class="title">CostChef 🔒</h1>
-  <div class="login-box">
-    <input id="code" placeholder="Zadaj prístupový kód">
-    <button onclick="checkCode()">Vstúpiť</button>
-  </div>
-</div>
+<div class="container">
 
-<!-- APP -->
-<div id="app" style="display:none;">
-  <div class="container">
+  <h1>CostChef</h1>
 
-    <h1 class="title">CostChef 🍽️</h1>
-    <button class="danger" onclick="resetAll()">Vymazať všetko</button>
+  <!-- 1. INGREDIENCIA -->
+  <section class="card">
+    <h2>1. Pridať ingredienciu</h2>
 
-    <!-- INGREDIENCIE -->
-    <section class="box">
-      <h2>Ingrediencie</h2>
+    <div class="row">
       <input id="ingName" placeholder="Názov ingrediencie">
-      <input id="ingPrice" type="number" step="0.01" placeholder="Cena za kilo €">
-      <input id="ingGrams" type="number" step="1" placeholder="Gramy na porciu">
-      <button onclick="addIngredient()">Pridať ingredienciu</button>
-      <ul id="ingredientsList"></ul>
-    </section>
+      <input id="ingPrice" type="number" step="0.01" placeholder="Cena €/kg">
+      <input id="ingGrams" type="number" step="1" placeholder="g na porciu">
+      <button onclick="addIngredient()">Pridať</button>
+    </div>
 
-    <!-- JEDLÁ -->
-    <section class="box">
-      <h2>Jedlá</h2>
+    <ul id="ingredientsList"></ul>
+  </section>
+
+  <!-- 2. JEDLO -->
+  <section class="card">
+    <h2>2. Vytvoriť jedlo</h2>
+
+    <div class="row">
       <input id="mealName" placeholder="Názov jedla">
       <input id="mealPrice" type="number" step="0.01" placeholder="Predajná cena €">
-      <button onclick="addMeal()">Pridať jedlo</button>
-      <ul id="mealsList"></ul>
-    </section>
+      <button onclick="addMeal()">Pridať</button>
+    </div>
 
-    <!-- PRIDAŤ INGREDIENCIE DO JEDLA -->
-    <section class="box highlight">
-      <h2>Pridať ingrediencie do jedla</h2>
+    <ul id="mealsList"></ul>
+  </section>
 
+  <!-- 3. PRIDAŤ INGREDIENCIE -->
+  <section class="card">
+    <h2>3. Pridať ingrediencie do jedla</h2>
+
+    <div class="row">
       <select id="mealSelect"></select>
-      <select id="ingSelect" multiple size="5"></select>
+      <select id="ingSelect" multiple size="6"></select>
+      <button onclick="addIngredientToMeal()">Pridať do jedla</button>
+    </div>
 
-      <button class="bigBtn" onclick="addIngredientToMeal()">
-        ➕ Pridať do jedla
-      </button>
-    </section>
+  </section>
 
-  </div>
 </div>
 
 <script src="app.js"></script>
