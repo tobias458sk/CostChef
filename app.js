@@ -1,30 +1,37 @@
 let ingredients = JSON.parse(localStorage.getItem("ingredients")) || [];
 let meals = JSON.parse(localStorage.getItem("meals")) || [];
 
+// =====================
 // ULOŽENIE
+// =====================
 function saveData() {
   localStorage.setItem("ingredients", JSON.stringify(ingredients));
   localStorage.setItem("meals", JSON.stringify(meals));
 }
 
+// =====================
 // VYMAZAŤ VŠETKO
+// =====================
 function clearAll() {
   if (confirm("Naozaj chceš vymazať všetko?")) {
     ingredients = [];
     meals = [];
-    localStorage.clear();
+    localStorage.removeItem("ingredients");
+    localStorage.removeItem("meals");
     renderAll();
   }
 }
 
+// =====================
 // PRIDAŤ INGREDIENCIU
+// =====================
 function addIngredient() {
   const name = ingName.value.trim();
   const price = parseFloat(ingPrice.value);
   const grams = parseFloat(ingGrams.value);
 
-  if (!name || isNaN(price) || isNaN(grams)) {
-    alert("Vyplň všetko");
+  if (!name || isNaN(price) || isNaN(grams) || price <= 0 || grams <= 0) {
+    alert("Vyplň všetko správne");
     return;
   }
 
@@ -37,13 +44,15 @@ function addIngredient() {
   ingGrams.value = "";
 }
 
+// =====================
 // PRIDAŤ JEDLO
+// =====================
 function addMeal() {
   const name = mealName.value.trim();
   const price = parseFloat(mealPrice.value);
 
-  if (!name || isNaN(price)) {
-    alert("Vyplň všetko");
+  if (!name || isNaN(price) || price <= 0) {
+    alert("Vyplň všetko správne");
     return;
   }
 
@@ -55,7 +64,9 @@ function addMeal() {
   mealPrice.value = "";
 }
 
-// PRIDAŤ INGREDIENCIE DO JEDLA (multi select)
+// =====================
+// PRIDAŤ INGREDIENCIE DO JEDLA
+// =====================
 function addIngredientToMeal() {
   const mealIndex = mealSelect.value;
   const selected = Array.from(ingSelect.selectedOptions);
@@ -66,9 +77,13 @@ function addIngredientToMeal() {
   }
 
   selected.forEach(opt => {
-    const ingIndex = opt.value;
+    const ingIndex = parseInt(opt.value);
     const grams = ingredients[ingIndex].grams;
-    meals[mealIndex].ingredients.push({ ingIndex, grams });
+
+    meals[mealIndex].ingredients.push({
+      ingIndex,
+      grams
+    });
   });
 
   saveData();
@@ -76,14 +91,18 @@ function addIngredientToMeal() {
   ingSelect.selectedIndex = -1;
 }
 
+// =====================
 // RENDER
+// =====================
 function renderAll() {
   renderIngredients();
   renderMeals();
   renderSelects();
 }
 
+// =====================
 // INGREDIENCIE
+// =====================
 function renderIngredients() {
   ingredientsList.innerHTML = "";
 
@@ -97,7 +116,9 @@ function renderIngredients() {
   });
 }
 
+// =====================
 // JEDLÁ
+// =====================
 function renderMeals() {
   mealsList.innerHTML = "";
 
@@ -111,13 +132,14 @@ function renderMeals() {
 
       const cost = (ing.price / 1000) * item.grams;
       total += cost;
+
       text += `${ing.name} (${item.grams}g), `;
     });
 
     text = text.slice(0, -2);
 
     const profit = meal.price - total;
-    const margin = meal.price ? (profit / meal.price) * 100 : 0;
+    const margin = meal.price > 0 ? (profit / meal.price) * 100 : 0;
 
     mealsList.innerHTML += `
       <li>
@@ -132,7 +154,9 @@ function renderMeals() {
   });
 }
 
+// =====================
 // SELECTY
+// =====================
 function renderSelects() {
   mealSelect.innerHTML = '<option value="">Vyber jedlo</option>';
   ingSelect.innerHTML = "";
@@ -146,9 +170,22 @@ function renderSelects() {
   });
 }
 
+// =====================
 // MAZANIE
+// =====================
 function removeIngredient(i) {
   ingredients.splice(i, 1);
+
+  // oprav indexy v jedlách
+  meals.forEach(meal => {
+    meal.ingredients = meal.ingredients.filter(item => item.ingIndex !== i);
+    meal.ingredients.forEach(item => {
+      if (item.ingIndex > i) {
+        item.ingIndex--;
+      }
+    });
+  });
+
   saveData();
   renderAll();
 }
@@ -159,5 +196,7 @@ function removeMeal(i) {
   renderAll();
 }
 
+// =====================
 // INIT
+// =====================
 renderAll();
