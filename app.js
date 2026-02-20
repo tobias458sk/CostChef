@@ -6,6 +6,7 @@ function saveData() {
   localStorage.setItem("meals", JSON.stringify(meals));
 }
 
+// LOGIN
 function checkCode() {
   const code = document.getElementById("code").value;
   if (code === "1234") {
@@ -16,6 +17,7 @@ function checkCode() {
   }
 }
 
+// RESET
 function resetAll() {
   if (confirm("Naozaj chceš všetko vymazať?")) {
     localStorage.clear();
@@ -25,71 +27,83 @@ function resetAll() {
   }
 }
 
+// PRIDAŤ INGREDIENCIU
 function addIngredient() {
   const name = ingName.value.trim();
   const price = parseFloat(ingPrice.value);
-  if (!name || isNaN(price)) return alert("Vyplň všetko");
+  const grams = parseFloat(ingGrams.value);
 
-  ingredients.push({ name, price });
+  if (!name || isNaN(price) || isNaN(grams)) return alert("Vyplň všetko");
+
+  ingredients.push({ name, price, grams });
   saveData();
   renderAll();
+
   ingName.value = "";
   ingPrice.value = "";
+  ingGrams.value = "";
 }
 
+// PRIDAŤ JEDLO
 function addMeal() {
   const name = mealName.value.trim();
   const price = parseFloat(mealPrice.value);
+
   if (!name || isNaN(price)) return alert("Vyplň všetko");
 
   meals.push({ name, price, ingredients: [] });
   saveData();
   renderAll();
+
   mealName.value = "";
   mealPrice.value = "";
 }
 
+// PRIDAŤ INGREDIENCIE K JEDLU
 function addIngredientToMeal() {
   const m = mealSelect.value;
   const selectedOptions = Array.from(ingSelect.selectedOptions);
-  const grams = parseFloat(ingAmount.value);
 
-  if (m === "" || selectedOptions.length === 0 || isNaN(grams)) return alert("Vyplň všetko");
+  if (m === "" || selectedOptions.length === 0) return alert("Vyber jedlo aj ingrediencie");
 
   selectedOptions.forEach(option => {
     const i = option.value;
+    const grams = ingredients[i].grams; // automaticky berieme gramáž z ingrediencie
     meals[m].ingredients.push({ ingIndex: i, grams });
   });
 
   saveData();
   renderAll();
-  ingAmount.value = "";
-  ingSelect.selectedIndex = -1; // Odznačí všetko
+  ingSelect.selectedIndex = -1; // odznačí všetko
 }
 
+// RENDER
 function renderAll() {
   renderIngredients();
   renderMeals();
   renderSelects();
 }
 
+// ZOBRAZIŤ INGREDIENCIE
 function renderIngredients() {
   ingredientsList.innerHTML = "";
   ingredients.forEach((ing, index) => {
     ingredientsList.innerHTML += `
       <li>
-        ${ing.name} - ${ing.price.toFixed(2)} € / kg
+        ${ing.name} - ${ing.price.toFixed(2)} € / kg | ${ing.grams} g na porciu
         <button onclick="ingredients.splice(${index},1);saveData();renderAll();">❌</button>
       </li>
     `;
   });
 }
 
+// ZOBRAZIŤ JEDLÁ
 function renderMeals() {
   mealsList.innerHTML = "";
   meals.forEach((meal, index) => {
     let total = 0;
     let ingredientsText = "";
+
     meal.ingredients.forEach(item => {
       const ing = ingredients[item.ingIndex];
       total += (ing.price / 1000) * item.grams;
@@ -99,6 +113,7 @@ function renderMeals() {
 
     const profit = meal.price - total;
     const margin = meal.price ? (profit / meal.price) * 100 : 0;
+
     let color = "#00b894";
     if (margin < 60) color = "#fdcb6e";
     if (margin < 40) color = "#d63031";
@@ -118,6 +133,7 @@ function renderMeals() {
   });
 }
 
+// RENDER SELECTOV
 function renderSelects() {
   mealSelect.innerHTML = '<option value="">Vyber jedlo</option>';
   ingSelect.innerHTML = '';
@@ -131,4 +147,5 @@ function renderSelects() {
   });
 }
 
+// INITIAL RENDER
 renderAll();
