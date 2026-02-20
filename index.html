@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CostChef</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CostChef</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -12,9 +12,12 @@
 
   <h1>CostChef</h1>
 
+  <!-- Tlačidlo vymazať všetko -->
   <button onclick="clearAll()" class="danger">Vymazať všetko</button>
 
+  <!-- ===================== -->
   <!-- INGREDIENCIE -->
+  <!-- ===================== -->
   <section class="card">
     <h2>Ingrediencie</h2>
 
@@ -28,7 +31,9 @@
     <ul id="ingredientsList"></ul>
   </section>
 
+  <!-- ===================== -->
   <!-- JEDLÁ -->
+  <!-- ===================== -->
   <section class="card">
     <h2>Jedlá</h2>
 
@@ -41,22 +46,26 @@
     <ul id="mealsList"></ul>
   </section>
 
-  <!-- ROZBOR -->
+  <!-- ===================== -->
+  <!-- PRIDAŤ INGREDIENCIE DO JEDLA -->
+  <!-- ===================== -->
   <section class="card">
-  <h2>Pridať ingrediencie do jedla</h2>
+    <h2>Pridať ingrediencie do jedla</h2>
 
-  <div class="row">
-    <select id="mealSelect"></select>
-  </div>
+    <div class="row">
+      <select id="mealSelect"></select>
+    </div>
 
-  <div id="ingredientCheckboxList" class="checkbox-list"></div>
+    <div id="ingredientCheckboxList" class="checkbox-list"></div>
 
-  <button onclick="addSelectedIngredients()">Pridať označené suroviny</button>
-</section>
-
+    <button onclick="addSelectedIngredients()">Pridať označené suroviny</button>
+  </section>
 
 </div>
 
+<!-- ===================== -->
+<!-- JAVASCRIPT -->
+<!-- ===================== -->
 <script src="app.js"></script>
 </body>
 </html>
