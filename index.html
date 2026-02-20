@@ -77,3 +77,31 @@
 <script src="app.js"></script>
 </body>
 </html>
+
+<!-- ===================== -->
+<!-- PRIDAŤ INGREDIENCIE DO JEDLA -->
+<!-- ===================== -->
+<section class="card">
+  <h2>Pridať ingrediencie do jedla</h2>
+
+  <div class="row">
+    <select id="mealSelect"></select>
+  </div>
+
+  <div id="ingredientCheckboxList" class="checkbox-list"></div>
+
+  <button onclick="addSelectedIngredients()">Pridať označené suroviny</button>
+</section>
+
+<!-- ===================== -->
+<!-- RECEPTY (prázdny modal) -->
+<!-- ===================== -->
+<button id="openRecipeModal">Recepty</button>
+
+<div id="recipeModal" class="modal">
+  <div class="modal-content">
+    <button id="closeRecipeModal" class="close-red">Späť</button>
+    <h2>Recepty</h2>
+    <!-- Tu sa neskôr pridajú recepty -->
+  </div>
+</div>
