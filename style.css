@@ -127,3 +127,11 @@ li {
   font-size: 12px;
   color: white;
 }
+
+select[multiple] {
+  min-height: 150px;
+}
+
+.card button {
+  margin-top: 10px;
+}
