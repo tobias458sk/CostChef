@@ -43,15 +43,17 @@
 
   <!-- ROZBOR -->
   <section class="card">
-    <h2>Pridať ingrediencie do jedla</h2>
+  <h2>Pridať ingrediencie do jedla</h2>
 
-    <div class="row">
-      <select id="mealSelect"></select>
-      <select id="ingSelect" multiple size="6"></select>
-    </div>
+  <div class="row">
+    <select id="mealSelect"></select>
+  </div>
 
-    <button onclick="addIngredientToMeal()">Pridať do jedla</button>
-  </section>
+  <div id="ingredientCheckboxList" class="checkbox-list"></div>
+
+  <button onclick="addSelectedIngredients()">Pridať označené suroviny</button>
+</section>
+
 
 </div>
 
