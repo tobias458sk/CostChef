@@ -158,3 +158,16 @@ select[multiple] {
   width: 18px;
   height: 18px;
 }
+
+.checkbox-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%; /* kruhový checkbox */
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.checkbox-item span {
+  flex: 1;
+  text-align: center;
+}
