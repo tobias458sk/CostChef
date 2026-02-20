@@ -68,17 +68,3 @@ function addSelectedIngredients() {
   renderAll();
 }
 
-const recipeModal = document.getElementById("recipeModal");
-const openModalBtn = document.getElementById("openRecipeModal");
-const closeModalBtn = document.getElementById("closeRecipeModal");
-
-// Otvoriť modal
-openModalBtn.onclick = () => recipeModal.style.display = "block";
-
-// Zavrieť modal
-closeModalBtn.onclick = () => recipeModal.style.display = "none";
-
-// Zavrieť kliknutím mimo obsahu
-window.onclick = (e) => { 
-  if (e.target == recipeModal) recipeModal.style.display = "none"; 
-}
