@@ -12,8 +12,7 @@ function clearAll() {
   if (confirm("Naozaj chceš vymazať všetko?")) {
     ingredients = [];
     meals = [];
-    localStorage.removeItem("ingredients");
-    localStorage.removeItem("meals");
+    localStorage.clear();
     renderAll();
   }
 }
@@ -22,18 +21,20 @@ function clearAll() {
 function addIngredient() {
   const name = ingName.value.trim();
   const price = parseFloat(ingPrice.value);
+  const grams = parseFloat(ingGrams.value);
 
-  if (!name || isNaN(price)) {
+  if (!name || isNaN(price) || isNaN(grams)) {
     alert("Vyplň všetko");
     return;
   }
 
-  ingredients.push({ name, price });
+  ingredients.push({ name, price, grams });
   saveData();
   renderAll();
 
   ingName.value = "";
   ingPrice.value = "";
+  ingGrams.value = "";
 }
 
 // PRIDAŤ JEDLO
@@ -54,40 +55,25 @@ function addMeal() {
   mealPrice.value = "";
 }
 
-// PRIDAŤ INGREDIENCIU DO JEDLA
+// PRIDAŤ INGREDIENCIE DO JEDLA (multi select)
 function addIngredientToMeal() {
   const mealIndex = mealSelect.value;
-  const ingIndex = ingSelect.value;
+  const selected = Array.from(ingSelect.selectedOptions);
 
-  if (mealIndex === "" || ingIndex === "") {
-    alert("Vyber jedlo aj ingredienciu");
+  if (mealIndex === "" || selected.length === 0) {
+    alert("Vyber jedlo aj ingrediencie");
     return;
   }
 
-  const grams = parseFloat(prompt("Zadaj počet gramov:"));
-
-  if (isNaN(grams)) {
-    alert("Zadaj správne číslo");
-    return;
-  }
-
-  meals[mealIndex].ingredients.push({ ingIndex, grams });
+  selected.forEach(opt => {
+    const ingIndex = opt.value;
+    const grams = ingredients[ingIndex].grams;
+    meals[mealIndex].ingredients.push({ ingIndex, grams });
+  });
 
   saveData();
   renderAll();
-}
-
-// VÝPOČET NÁKLADOV
-function calculateCost(meal) {
-  let total = 0;
-
-  meal.ingredients.forEach(item => {
-    const ing = ingredients[item.ingIndex];
-    if (!ing) return;
-    total += (ing.price / 1000) * item.grams;
-  });
-
-  return total;
+  ingSelect.selectedIndex = -1;
 }
 
 // RENDER
@@ -95,7 +81,6 @@ function renderAll() {
   renderIngredients();
   renderMeals();
   renderSelects();
-  renderSummary();
 }
 
 // INGREDIENCIE
@@ -105,7 +90,7 @@ function renderIngredients() {
   ingredients.forEach((ing, i) => {
     ingredientsList.innerHTML += `
       <li>
-        ${ing.name} — ${ing.price.toFixed(2)} €/kg
+        ${ing.name} — ${ing.price.toFixed(2)} €/kg | ${ing.grams} g
         <button onclick="removeIngredient(${i})">❌</button>
       </li>
     `;
@@ -117,37 +102,30 @@ function renderMeals() {
   mealsList.innerHTML = "";
 
   meals.forEach((meal, i) => {
+    let total = 0;
+    let text = "";
 
-    const total = calculateCost(meal);
-    const profit = meal.price - total;
-    const margin = meal.price ? (profit / meal.price) * 100 : 0;
-
-    let marginColor = "#00ffae";
-    if (margin < 30) marginColor = "#ff3b3b";
-    else if (margin < 70) marginColor = "#ffaa00";
-
-    let mealClass = profit < 0 ? "loss" : "";
-
-    let ingredientsText = "";
     meal.ingredients.forEach(item => {
       const ing = ingredients[item.ingIndex];
       if (!ing) return;
-      ingredientsText += `${ing.name} (${item.grams}g), `;
+
+      const cost = (ing.price / 1000) * item.grams;
+      total += cost;
+      text += `${ing.name} (${item.grams}g), `;
     });
 
-    ingredientsText = ingredientsText.slice(0, -2);
+    text = text.slice(0, -2);
+
+    const profit = meal.price - total;
+    const margin = meal.price ? (profit / meal.price) * 100 : 0;
 
     mealsList.innerHTML += `
-      <li class="${mealClass}">
+      <li>
         <strong>${meal.name}</strong><br>
         Predaj: ${meal.price.toFixed(2)} €<br>
         Náklady: ${total.toFixed(2)} €<br>
-        Zisk: ${profit.toFixed(2)} €<br>
-        Marža: <span style="color:${marginColor}">
-          ${margin.toFixed(1)} %
-        </span><br>
-        Ingrediencie: ${ingredientsText || "žiadne"}
-        <br>
+        Ingrediencie: ${text || "žiadne"}<br>
+        <b>Zisk: ${profit.toFixed(2)} € | Marža: ${margin.toFixed(1)} %</b>
         <button onclick="removeMeal(${i})">❌</button>
       </li>
     `;
@@ -157,7 +135,7 @@ function renderMeals() {
 // SELECTY
 function renderSelects() {
   mealSelect.innerHTML = '<option value="">Vyber jedlo</option>';
-  ingSelect.innerHTML = '<option value="">Vyber ingredienciu</option>';
+  ingSelect.innerHTML = "";
 
   meals.forEach((m, i) => {
     mealSelect.innerHTML += `<option value="${i}">${m.name}</option>`;
@@ -166,15 +144,6 @@ function renderSelects() {
   ingredients.forEach((ing, i) => {
     ingSelect.innerHTML += `<option value="${i}">${ing.name}</option>`;
   });
-}
-
-// SUMMARY
-function renderSummary() {
-  if (typeof sumIngredients !== "undefined")
-    sumIngredients.textContent = ingredients.length;
-
-  if (typeof sumMeals !== "undefined")
-    sumMeals.textContent = meals.length;
 }
 
 // MAZANIE
